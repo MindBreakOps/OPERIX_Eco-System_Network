@@ -3,383 +3,601 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
-<title>OPERIX Ecosystem Overview</title>
+<title>OPERIX Ecosystem Architecture</title>
 <meta name="theme-color" content="#f0eff5">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700;800&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════
-   OPERIX — Liquid Glass Tokens
+   OPERIX — Premium Liquid Glass Tokens (LIGHT MODE)
 ═══════════════════════════════════════════════════ */
 :root {
   --bg: #f0eff5;
-  --surface: rgba(255,255,255,0.72);
-  --glass: rgba(255,255,255,0.55);
-  --glass-border: rgba(255,255,255,0.6);
-  --glass2: rgba(255,255,255,0.38);
-  --glass-border2: rgba(255,255,255,0.35);
+  --surface: rgba(255, 255, 255, 0.85);
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass2: rgba(255, 255, 255, 0.38);
   
   --text: #18161f;
   --text2: #3d3a4e;
   --text3: #7c788f;
   --text4: #b0acbf;
   
-  --gold: #9a6f28;
-  --gold-bg: rgba(196,144,48,.08);
-  --gold-border: rgba(196,144,48,.22);
-  
-  --blue: #1d4ed8;
-  --blue-bg: rgba(29,78,216,.07);
-  --blue-border: rgba(29,78,216,.2);
-  
-  --green: #1a6b3a;
-  --green-bg: rgba(26,107,58,.08);
-  --green-border: rgba(26,107,58,.2);
-  
-  --purple: #6d28d9;
-  --purple-bg: rgba(109,40,217,.07);
-  --purple-border: rgba(109,40,217,.2);
-  
-  --amber: #92600a;
-  --amber-bg: rgba(146,96,10,.08);
-  --amber-border: rgba(146,96,10,.2);
+  /* System Colors - Tuned for Light Mode */
+  --erp: #1d4ed8;       /* Blue */
+  --exec: #d97706;      /* Gold/Amber */
+  --finance: #0f766e;   /* Teal */
+  --marketing: #db2777; /* Pink */
+  --hr: #7c3aed;        /* Purple */
+  --field: #ea580c;     /* Orange */
+  --support: #dc2626;   /* Red */
+  --freelancer: #0d9488;/* Mint */
+  --comms: #2563eb;     /* Royal Blue */
 
-  --red: #c0392b;
-  --red-bg: rgba(192,57,43,.08);
-  --red-border: rgba(192,57,43,.2);
+  --shadow: 0 4px 20px rgba(18, 16, 31, 0.06);
+  --shadow-md: 0 8px 32px rgba(18, 16, 31, 0.08);
+  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.02);
 
-  --teal: #0f766e;
-  --teal-bg: rgba(15,118,110,.07);
-  --teal-border: rgba(15,118,110,.2);
-
-  --shadow: 0 2px 8px rgba(18,16,31,.06), 0 1px 2px rgba(18,16,31,.04);
-  --shadow-md: 0 4px 16px rgba(18,16,31,.09), 0 2px 4px rgba(18,16,31,.05);
-  --shadow-inset: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -1px 0 rgba(0,0,0,.04);
-
-  --r: 16px; --r2: 12px; --r3: 9px;
+  --r: 20px; --r2: 14px; --r3: 8px;
   
   --font-ui: 'Space Grotesk', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'Fira Code', monospace;
 }
 
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); margin: 0; -webkit-font-smoothing: antialiased; }
+body { 
+  font-family: var(--font-body); 
+  background: var(--bg); 
+  color: var(--text); 
+  margin: 0; 
+  -webkit-font-smoothing: antialiased; 
+  min-height: 100vh; 
+  overflow-x: hidden; 
+  background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f0eff5 70%);
+}
 
 /* Header */
 .app-header {
-  padding: 14px 24px; background: var(--glass); backdrop-filter: blur(24px) saturate(1.6); -webkit-backdrop-filter: blur(24px) saturate(1.6);
-  border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center;
-  box-shadow: 0 1px 0 var(--glass-border), 0 4px 16px rgba(0,0,0,.04);
+  padding: 16px 32px; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center;
 }
 
-.btn-gold {
-  padding: 10px 18px; background: linear-gradient(135deg, var(--gold) 0%, #c49030 100%); color: #fff;
-  font-family: var(--font-ui); font-size: 13px; font-weight: 700; border: none; border-radius: var(--r2); cursor: pointer;
-  transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,144,48,.28); text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+.container { max-width: 1550px; margin: 0 auto; padding: 40px 24px; }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); color: var(--text); }
+
+/* ═══════════════════════════════════════════════════
+   INTERACTIVE EXPLORER
+═══════════════════════════════════════════════════ */
+.explorer-grid {
+	display: grid;
+	grid-template-columns: 1fr 500px;
+	gap: 40px;
+	align-items: stretch;
 }
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(196,144,48,.4); }
 
-.btn-ghost {
-  padding: 8px 14px; background: var(--glass2); border: 1.5px solid var(--glass-border2); color: var(--text2);
-  font-family: var(--font-body); font-size: 12px; font-weight: 600; border-radius: var(--r3); cursor: pointer; transition: all 0.2s;
+@media (max-width: 1200px) {
+	.explorer-grid { grid-template-columns: 1fr; align-items: start; }
 }
-.btn-ghost:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-bg); }
 
-/* Layout */
-.container { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
-
-/* Interactive Cards */
-.module-card {
-  background: var(--surface); border: 1.5px solid var(--glass-border); border-radius: var(--r); padding: 24px;
-  box-shadow: var(--shadow), var(--shadow-inset); backdrop-filter: blur(20px); transition: all 0.3s cubic-bezier(.4,0,.2,1);
-  display: flex; flex-direction: column; cursor: pointer; position: relative; overflow: hidden;
+/* Network Map */
+.network-map {
+	position: relative; width: 100%; min-height: 850px; 
+	background: var(--surface); border: 1px solid var(--glass-border); border-radius: 32px;
+	box-shadow: var(--shadow); backdrop-filter: blur(40px); overflow: hidden;
 }
-.module-card:hover { border-color: var(--gold-border); box-shadow: var(--shadow-md), var(--shadow-inset); transform: translateY(-2px); }
 
-.icon-box {
-  width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-bottom: 16px;
+/* Grid Background */
+.network-map::before {
+	content: ''; position: absolute; inset: 0;
+	background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+	background-size: 30px 30px; pointer-events: none;
 }
-.module-title { font-family: var(--font-ui); font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
-.module-desc { font-size: 13px; color: var(--text3); line-height: 1.6; }
 
-/* Expanding Details */
-.module-details {
-  max-height: 0; opacity: 0; overflow: hidden; transition: all 0.4s ease; margin-top: 0;
-  border-top: 1px dashed transparent; padding-top: 0;
+/* SVG Lines */
+.network-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.flow-line { fill: none; stroke: rgba(0,0,0,0.08); stroke-width: 3; transition: all 0.4s ease; }
+.flow-line.active { stroke-width: 4; stroke-dasharray: 8 8; animation: dataFlow 1s linear infinite; }
+@keyframes dataFlow { to { stroke-dashoffset: -16; } }
+
+/* Standard Nodes */
+.node {
+	position: absolute; transform: translate(-50%, -50%);
+	width: 140px; height: 130px; 
+	border-radius: 28px;
+	display: flex; flex-direction: column; align-items: center; justify-content: center;
+	cursor: pointer; z-index: 10; transition: all 0.3s cubic-bezier(.4,0,.2,1);
+	background: var(--glass); border: 1px solid var(--glass-border);
+	box-shadow: var(--shadow);
 }
-.module-card.expanded .module-details {
-  max-height: 600px; opacity: 1; margin-top: 16px; border-top-color: var(--glass-border2); padding-top: 16px;
+.node::after {
+	content: ''; position: absolute; inset: -1px; border-radius: inherit;
+	background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 60%); pointer-events: none;
 }
-.module-card.expanded { border-color: var(--gold); box-shadow: var(--shadow-md); background: var(--glass); }
+.node-icon { margin-bottom: 12px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+.node-label { font-family: var(--font-ui); font-size: 13px; font-weight: 800; color: var(--text); text-align: center; line-height: 1.3; padding: 0 12px; letter-spacing: 0.02em; text-transform: uppercase; }
 
-.detail-list { list-style: none; padding: 0; margin: 0; font-size: 12px; color: var(--text2); }
-.detail-list li { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; line-height: 1.5; }
-.detail-list li::before { content: '✦'; color: var(--gold); font-size: 10px; margin-top: 2px; }
+.node:hover { transform: translate(-50%, -50%) scale(1.08); background: #ffffff; }
+.node.active { transform: translate(-50%, -50%) scale(1.15); z-index: 20; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+.node.active .node-icon { transform: scale(1.1); }
 
-.tag { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+/* WIDER Exec Node */
+.node.exec-node { width: 190px; height: 140px; }
 
-.grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+/* MASSIVE Center Node (ERP) */
+.node.center { width: 240px; height: 180px; border-radius: 40px; background: rgba(255,255,255,0.95); border: 2px solid var(--erp); box-shadow: 0 0 30px rgba(29, 78, 216, 0.15); animation: pulseHub 4s infinite alternate; }
+.node.center .node-label { font-size: 16px; }
+@keyframes pulseHub { 0% { box-shadow: 0 0 20px rgba(29, 78, 216, 0.1); } 100% { box-shadow: 0 0 50px rgba(29, 78, 216, 0.3); } }
+
+/* Detail Panel */
+.detail-panel {
+	background: var(--surface); border: 1px solid var(--glass-border); border-radius: 32px;
+	padding: 32px; box-shadow: var(--shadow-md), var(--shadow-inset); backdrop-filter: blur(40px);
+	height: 100%; display: flex; flex-direction: column;
+}
+.detail-panel.placeholder { justify-content: center; align-items: center; text-align: center; color: var(--text4); }
+.detail-title { font-family: var(--font-ui); font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 8px; line-height: 1.1; letter-spacing: -0.02em;}
+.detail-desc { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 24px; font-weight: 500; }
+.detail-section-title { font-size: 11px; color: var(--text3); font-weight: 800; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 8px; }
+
+/* Internal Boards Grid */
+.boards-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.board-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--text2); }
+
+.function-list { list-style: none; padding: 0; margin: 0 0 24px 0; }
+.function-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 13px; color: var(--text2); line-height: 1.6; font-weight: 500; }
+.function-list li strong { color: var(--text); font-weight: 700; }
+
+.lifecycle-box { background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; padding: 20px; margin-bottom: 24px; font-size: 13px; line-height: 1.6; color: var(--text2); }
+.data-flow-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text3); }
+
+.connection-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.sys-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); cursor: pointer; transition: 0.2s;}
+.sys-tag:hover { background: #ffffff; transform: translateY(-1px); box-shadow: var(--shadow); }
 
 </style>
 </head>
 <body>
 
 <div class="app-header">
-  <div style="display: flex; align-items: center; gap: 12px;">
-    <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" alt="OPERIX Logo" style="width: 36px; height: 36px; border-radius: 10px; box-shadow: var(--shadow);">
-    <div style="font-family: var(--font-ui); font-size: 18px; font-weight: 800; letter-spacing: 0.05em;">OPERIX <span style="color:var(--gold);">SUITE</span></div>
+  <div style="display: flex; align-items: center; gap: 14px;">
+	<img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" alt="OPERIX Logo" style="width: 40px; height: 40px; border-radius: 12px; background: #fff; padding: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+	<div style="font-family: var(--font-ui); font-size: 22px; font-weight: 800; letter-spacing: -0.02em;">OPERIX <span style="color:var(--exec);">ECOSYSTEM</span></div>
   </div>
-  <a href="mailto:operixsolution@gmail.com" class="btn-gold">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    Contact Solutions
-  </a>
+  <div style="font-size: 12px; font-family: var(--font-mono); color: var(--text4); font-weight: 600;">v7.2.1 ARCHITECTURE</div>
 </div>
 
 <div class="container">
   
-  <div style="text-align: center; margin-bottom: 64px;">
-    <img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" style="width:80px; height:80px; border-radius: 20px; box-shadow: var(--shadow-md); margin: 0 auto 24px; display: block; border: 2px solid var(--surface);">
-    <h1 style="font-family: var(--font-ui); font-size: 42px; font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.1;">The Unified Operational Ecosystem</h1>
-    <p style="font-size: 16px; color: var(--text3); max-width: 600px; margin: 0 auto; line-height: 1.6;">
-      Explore the comprehensive suite of modules powering OPERIX. Click any module below to reveal its live capabilities, connections, and architecture.
-    </p>
+  <div style="text-align: center; margin-bottom: 60px;">
+	<h1 style="font-family: var(--font-ui); font-size: 48px; font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.1; letter-spacing: -0.02em;">The Intelligence Network</h1>
+	<p style="font-size: 16px; color: var(--text3); max-width: 700px; margin: 0 auto; line-height: 1.7; font-weight: 500;">
+	  Explore the operational architecture of OPERIX. Click any node on the network map to view its simulated internal boards, data flows, and routing infrastructure.
+	</p>
   </div>
 
-  <div style="font-size: 11px; color: var(--text4); font-weight: 700; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 20px;">Core Infrastructure</div>
+  <div class="explorer-grid">
+	  
+	  <div class="network-map" id="network-container">
+		  <svg class="network-lines" id="svg-layer"></svg>
+		  <div id="nodes-layer"></div>
+	  </div>
 
-  <div class="grid-cards" style="margin-bottom: 40px;">
-    
-    <div class="module-card" onclick="this.classList.toggle('expanded')" style="border-top: 3px solid var(--gold);">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--gold-bg); border:1.5px solid var(--gold-border); color:var(--gold);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-        </div>
-        <span class="tag" style="background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-border);">Core Routing</span>
-      </div>
-      <div class="module-title">Projects Workspace (The Hub)</div>
-      <div class="module-desc">The central command center where admins deploy new client projects and toggle active modules.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Supabase Infrastructure:</strong> Powered entirely by Supabase for lightning-fast, real-time data synchronization and bank-grade security—eliminating the latency of traditional setups.</li>
-          <li><strong>Module Toggles:</strong> Choose exactly which boards are active for a specific client (e.g., enable Valet Ops but disable ANPR).</li>
-          <li><strong>Project Types:</strong> Segregate projects by type (Operations, Entertainment, ANPR) to apply automated business logic.</li>
-          <li><strong>Unified Dashboard:</strong> A single screen where managers can view all active corporate deployments and dive into specific boards.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
+	  <div class="detail-panel placeholder" id="detail-panel">
+		  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="opacity:0.2; margin-bottom:20px; color: var(--text3);">
+			  <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+		  </svg>
+		  <div style="font-family: var(--font-ui); font-size: 20px; font-weight: 800; color: var(--text2);">Awaiting Telemetry</div>
+		  <div style="font-size: 14px; margin-top: 8px; max-width: 280px; line-height: 1.6;">Initialize a connection by selecting a system node on the network map.</div>
+	  </div>
 
-    <div class="module-card" onclick="this.classList.toggle('expanded')" style="border-top: 3px solid var(--blue);">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--blue-bg); border:1.5px solid var(--blue-border); color:var(--blue);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <span class="tag" style="background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-border);">Enterprise</span>
-      </div>
-      <div class="module-title">Enterprise HRIS & Payroll</div>
-      <div class="module-desc">A massive standalone HR system handling map-based shift scheduling, automated payroll calculation, and recruitment.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Payroll Engine:</strong> Automatically calculates base salaries against GPS check-ins, dynamically applying deductions for late arrivals or absences. Generates printable payslips.</li>
-          <li><strong>Map-Based Scheduling:</strong> Admins use integrated Leaflet/Nominatim maps to draw physical geofences for shifts, setting exact permitted GPS radiuses for staff.</li>
-          <li><strong>Recruitment (ATS):</strong> Built-in Kanban pipeline for tracking job applicants from "Screening" to "Offered", complete with CV parsing.</li>
-          <li><strong>Deep Profiles:</strong> Centralized storage for employee ID scans, driving licenses, and digital CVs.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-  </div>
-
-  <div style="font-size: 11px; color: var(--text4); font-weight: 700; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 20px;">Operational Modules</div>
-
-  <div class="grid-cards">
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--purple-bg); border:1.5px solid var(--purple-border); color:var(--purple);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <span class="tag" style="background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border);">Field App</span>
-      </div>
-      <div class="module-title">HR Field Board (ESS)</div>
-      <div class="module-desc">The mobile-first Employee Self-Service portal for frontline workers to interact with the Enterprise HRIS.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Geofenced Clock-In:</strong> Validates worker location against the site coordinates set by admins before allowing check-in.</li>
-          <li><strong>Live Shift Tracker:</strong> Visual timer calculating earned salary, deductions, and late penalties dynamically in real-time.</li>
-          <li><strong>Digital Requests:</strong> Employees can submit vacation/permission requests with attachments directly to admins.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--amber-bg); border:1.5px solid var(--amber-border); color:var(--amber);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <span class="tag" style="background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border);">Generators</span>
-      </div>
-      <div class="module-title">Document Studio</div>
-      <div class="module-desc">Code-free generation of official business letters, job offers, contracts, and quotes with digital stamps.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Rich Text Editor:</strong> Draft documents directly in the browser with custom fonts (Cormorant, Space Grotesk, Amiri).</li>
-          <li><strong>Digital Stamps:</strong> Configurable company seals and stamps applied directly to the document.</li>
-          <li><strong>Export Engine:</strong> One-click conversion to high-resolution PDF or PNG.</li>
-          <li><strong>Direct Sharing:</strong> Instantly share generated documents internally via the Mail Board.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--green-bg); border:1.5px solid var(--green-border); color:var(--green);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 6V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="10" y1="13" x2="14" y2="13"/></svg>
-        </div>
-        <span class="tag" style="background:var(--green-bg); color:var(--green); border:1px solid var(--green-border);">Logistics</span>
-      </div>
-      <div class="module-title">ANPR & Valet Operations</div>
-      <div class="module-desc">Automated Number Plate Recognition and end-to-end valet tracking with real-time digital ticketing.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Camera Integration:</strong> Live browser-based OCR scanning to detect and register license plates instantly.</li>
-          <li><strong>Digital Invoices:</strong> Generates beautiful, print-ready parking tickets with QR codes.</li>
-          <li><strong>Live Recall System:</strong> Valet screens flash and chime when a client requests their vehicle.</li>
-          <li><strong>Financial Link:</strong> All paid parking operations sync directly to the Admin Accounting board.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--teal-bg); border:1.5px solid var(--teal-border); color:var(--teal);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <span class="tag" style="background:var(--teal-bg); color:var(--teal); border:1px solid var(--teal-border);">Finance</span>
-      </div>
-      <div class="module-title">Accounting Board</div>
-      <div class="module-desc">Admin-secured financial hub tracking project P&L, salaries, expenses, and asset valuation.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Project Segregation:</strong> View Net Profit vs Loss per specific operation (e.g., Mind Break Cafe).</li>
-          <li><strong>Clearance Logs:</strong> Track outstanding supplier debts, client credits, and settled invoices.</li>
-          <li><strong>Export Ready:</strong> Click to export financial views to Excel (XLSX) or CSV.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--purple-bg); border:1.5px solid var(--purple-border); color:var(--purple);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <span class="tag" style="background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border);">Comms</span>
-      </div>
-      <div class="module-title">Internal Mail Board</div>
-      <div class="module-desc">Secure internal messaging system with custom HTML signatures and attachment handling.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Signature Builder:</strong> Generate rich-text, branded OPERIX signatures with employee photos.</li>
-          <li><strong>Cloud Attachments:</strong> Seamlessly upload files to Google Drive and link them in messages.</li>
-          <li><strong>External Bridge:</strong> "Open in Gmail" feature pre-formats the email and copies the HTML signature to clipboard for external client communication.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--gold-bg); border:1.5px solid var(--gold-border); color:var(--gold);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-        </div>
-        <span class="tag" style="background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-border);">Hardware</span>
-      </div>
-      <div class="module-title">Inventory & Assets</div>
-      <div class="module-desc">Physical hardware check-out system for operations equipment and cafe consumables.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Rapid Check-in/Out:</strong> Assign radios, keys, or tools to specific employees instantly.</li>
-          <li><strong>Stock Alerts:</strong> Automated visual warnings when consumable items (e.g. Cafe Stock) fall below threshold.</li>
-          <li><strong>Audit Trail:</strong> Every check-in/out logs the time, date, employee, and condition of the asset.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-    
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--red-bg); border:1.5px solid var(--red-border); color:var(--red);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-        </div>
-        <span class="tag" style="background:var(--red-bg); color:var(--red); border:1px solid var(--red-border);">Support</span>
-      </div>
-      <div class="module-title">Maintenance Ticketing</div>
-      <div class="module-desc">Two-sided application for staff to report issues and management to track repairs.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Smart Categorization:</strong> Route issues automatically (e.g., ANPR camera failure vs. Valet uniform issue).</li>
-          <li><strong>Priority Triage:</strong> Color-coded visual badges for Normal, High, or Emergency level tickets.</li>
-          <li><strong>Kanban & Table Views:</strong> Managers can drag and drop tickets from "Open" to "Resolved".</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-    <div class="module-card" onclick="this.classList.toggle('expanded')">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="icon-box" style="background:var(--text); color:white;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <span class="tag" style="background:var(--border2); color:var(--text); border:1px solid var(--border3);">Infrastructure</span>
-      </div>
-      <div class="module-title">Role-Based Security</div>
-      <div class="module-desc">Bank-grade security featuring 2-Factor Authentication, trusted devices, and admin passcodes.</div>
-      
-      <div class="module-details">
-        <ul class="detail-list">
-          <li><strong>Admin Passcode:</strong> A secondary 6-digit numeric pin required to access financial and system settings.</li>
-          <li><strong>Trusted Devices:</strong> Fingerprints user browsers. Logging in from a new iPhone triggers an OTP challenge to a separate trusted email.</li>
-          <li><strong>Module Locking:</strong> Frontline staff see only operations; Managers see HR; only Admins see Accounting.</li>
-        </ul>
-        <button class="btn-ghost" style="width:100%; margin-top: 12px;">Close Details</button>
-      </div>
-    </div>
-
-  </div>
-  
-  <div style="margin-top: 60px; text-align: center; border-top: 1px solid var(--glass-border2); padding-top: 24px;">
-    <p style="font-size: 11px; color: var(--text4); font-weight: 600; letter-spacing: .1em; text-transform: uppercase;">
-      OPERIX Management Platform · Unified Ecosystem · 2026
-    </p>
   </div>
 
 </div>
 
 <script>
-  // Add simple interaction script
-  document.querySelectorAll('.module-card').forEach(card => {
-    card.addEventListener('click', function() {
-      // Toggle class is handled inline on HTML, this just ensures sibling cards collapse
-      document.querySelectorAll('.module-card').forEach(c => {
-        if (c !== this) c.classList.remove('expanded');
-      });
-    });
-  });
+// ═══════════════════════════════════════════════════════════════
+// COMPLETE ECOSYSTEM DATA DICTIONARY (WITH DETAILED BOARDS)
+// ═══════════════════════════════════════════════════════════════
+const ecosystemData = {
+	'erp': {
+		id: 'erp',
+		title: 'OPERIX Suite (Main ERP)',
+		role: 'Admins & Managers',
+		colorToken: 'erp',
+		isCenter: true,
+		icon: '<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+		desc: 'The central nervous system of OPERIX. It houses the Supabase SQL database, authenticates users, routes APIs, and maintains the absolute source of truth for the entire company.',
+		boards: [
+			'Global Projects Hub', 
+			'HR Directory & Payroll', 
+			'Accounting & FMIS', 
+			'Tasks & Kanban', 
+			'Document Studio',
+			'Analytics & Export'
+		],
+		lifecycle: 'All peripheral applications ping this central hub. It validates their JWT tokens, processes their data inputs, and stores the records safely. It then serves this cleaned, aggregated data out to the Executive and Financial dashboards.',
+		in: 'Raw logs, Invoices, GPS pings, Support tickets',
+		out: 'Aggregated KPIs, Authenticated Tokens, Payroll numbers',
+		functions: [
+			'<strong>Supabase Engine:</strong> Real-time PostgreSQL database with Row Level Security.',
+			'<strong>Authentication (2FA):</strong> Handles secure logins, OTP generation, and trusted device fingerprinting.',
+			'<strong>Project Setup:</strong> The master switchboard where new client workspaces and API endpoints are configured.'
+		],
+		connections: ['exec', 'finance', 'marketing', 'hr', 'field', 'support', 'freelancer', 'comms'],
+		pos: { x: 50, y: 50 }
+	},
+	'exec': {
+		id: 'exec',
+		title: 'Executive Command',
+		role: 'C-Level & Directors',
+		colorToken: 'exec',
+		isWider: true,
+		icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+		desc: 'A secure, high-level viewport providing complete transparency over global operations, finances, and departmental health without granular noise.',
+		boards: [
+			'Global Operations Dash', 
+			'Project Leadership Matrix', 
+			'Financial Telemetry', 
+			'AI Email Writer',
+			'Leave & OKRs'
+		],
+		lifecycle: 'Pulls pre-aggregated telemetry directly from the Core ERP. Executives use this to make macro-decisions, assign Project Directors to new sites, and broadcast company-wide AI-generated emails back down the chain.',
+		in: 'Global KPIs, Open Tickets, HR Leave counts, Revenue',
+		out: 'Project Manager assignments, Company-wide emails, Approvals',
+		functions: [
+			'<strong>Global Dashboards:</strong> Live YTD revenue vs expenses visual charts.',
+			'<strong>Project Leadership:</strong> Assign Operation Managers to active projects globally.',
+			'<strong>AI Email Writer:</strong> Draft, format, and broadcast corporate announcements using AI.'
+		],
+		connections: ['erp', 'finance'],
+		pos: { x: 50, y: 12 }
+	},
+	'finance': {
+		id: 'finance',
+		title: 'Accounting (FMIS)',
+		role: 'Accountants & Auditors',
+		colorToken: 'finance',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+		desc: 'The Financial Management Information System (FMIS). Handles P&L, expense tracking, payroll execution, and asset valuation.',
+		boards: [
+			'Project P&L Dashboard', 
+			'Salaries & Wages', 
+			'Expense Tracking', 
+			'Asset Valuation',
+			'Clearance Logs'
+		],
+		lifecycle: 'Automatically catches revenue invoices pushed by Field Operators and payroll data calculated by HR. Accountants verify the numbers, process clearances, and export official financial reports for the Executive Command.',
+		in: 'Valet Revenue, Payroll numbers, Supplier invoices',
+		out: 'P&L Statements, Clearances, Asset Valuation (SAR)',
+		functions: [
+			'<strong>Revenue Reconciliation:</strong> Verifies incoming cash flows from field operations.',
+			'<strong>Payroll Execution:</strong> Finalizes and distributes the salaries calculated by the HR module.',
+			'<strong>Data Export:</strong> Generates unified XLSX/CSV financial reports per project.'
+		],
+		connections: ['erp', 'exec', 'marketing'],
+		pos: { x: 77, y: 23 }
+	},
+	'marketing': {
+		id: 'marketing',
+		title: 'Generators & CRM',
+		role: 'Sales Reps & Directors',
+		colorToken: 'marketing',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>',
+		desc: 'Code-free generation of official business documents and the CRM outreach hub for tracking lead conversions.',
+		boards: [
+			'Document Studio', 
+			'Contracts Builder (Directors)', 
+			'Lead Kanban', 
+			'Sales Quotations'
+		],
+		lifecycle: 'Sales reps log potential leads. When a deal is closed, Project Directors use the Contracts Builder to generate binding agreements via Document Studio. The financial metadata is pushed to the Accounting board.',
+		in: 'Client requests, Market data',
+		out: 'New Projects, Sales Quotes, Signed Contracts',
+		functions: [
+			'<strong>Contracts Builder:</strong> Specialized board for Project Directors to draft scopes of work.',
+			'<strong>Document Studio:</strong> Rich text editor with digital stamps for letters and offers.',
+			'<strong>Lead Kanban:</strong> Drag-and-drop pipeline for tracking potential clients.'
+		],
+		connections: ['erp', 'finance'],
+		pos: { x: 88, y: 50 }
+	},
+	'comms': {
+		id: 'comms',
+		title: 'Internal Comms',
+		role: 'All Employees',
+		colorToken: 'comms',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+		desc: 'Secure internal messaging system with custom HTML signatures, drive attachment handling, and history logs.',
+		boards: [
+			'Secure Inbox', 
+			'Drafts & Sent', 
+			'HTML Signature Builder', 
+			'External Bridge (Gmail)'
+		],
+		lifecycle: 'Operates as a standalone messaging node hooked into the GAS API. It allows staff to build branded signatures and instantly beam updates to other users or external clients via the Gmail bridge.',
+		in: 'Internal Messages, Shared Documents',
+		out: 'Broadcasts, External Client Emails',
+		functions: [
+			'<strong>Signature Builder:</strong> Generate rich-text, branded OPERIX signatures with employee photos.',
+			'<strong>Cloud Attachments:</strong> Seamlessly upload files to Google Drive and link them in messages.',
+			'<strong>External Bridge:</strong> Pre-formats emails and copies HTML signatures to clipboard for external sending.'
+		],
+		connections: ['erp', 'exec'],
+		pos: { x: 77, y: 77 }
+	},
+	'field': {
+		id: 'field',
+		title: 'Field Operations',
+		role: 'Valets & Operators',
+		colorToken: 'field',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 6V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="10" y1="13" x2="14" y2="13"/></svg>',
+		desc: 'The frontline execution platform. A mobile-optimized web app used outdoors by staff to manage vehicle logistics and ticketing.',
+		boards: [
+			'Live ANPR Scanner', 
+			'Valet Ticketing', 
+			'Active Vehicle Tracking', 
+			'Geofenced ESS Clock-In'
+		],
+		lifecycle: 'Operators use device cameras to scan plates. When a car is returned and paid for, the app instantly fires the revenue data to the Finance Board and the operational stats to the Executive Command.',
+		in: 'Client cars, Shift schedules (from HR)',
+		out: 'Digital Invoices, Live telemetry, Revenue data',
+		functions: [
+			'<strong>ANPR Scanner:</strong> Automated License Plate Recognition using mobile cameras.',
+			'<strong>Digital Ticketing:</strong> Generates and prints smart parking tickets with QR codes.',
+			'<strong>Geofenced ESS:</strong> Employee Self-Service portal for clocking into shifts.'
+		],
+		connections: ['erp', 'hr'],
+		pos: { x: 50, y: 88 }
+	},
+	'support': {
+		id: 'support',
+		title: 'Support & Hardware',
+		role: 'Techs & IT',
+		colorToken: 'support',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+		desc: 'The logistical backbone tracking physical assets, cafe inventory, and managing facility repair requests.',
+		boards: [
+			'Issue Triage (Kanban)', 
+			'Inventory Tracking', 
+			'Asset Check-in/out', 
+			'Cafe Stock Alerts'
+		],
+		lifecycle: 'Staff report broken hardware here. IT resolves the tickets and updates inventory. Physical asset values are synced with the Finance board for depreciation tracking.',
+		in: 'Broken equipment reports, Low stock alerts',
+		out: 'Resolved tickets, Restock orders, Asset logs',
+		functions: [
+			'<strong>Inventory Tracking:</strong> Manage cafe stock and operational equipment with low-stock warnings.',
+			'<strong>Asset Allocation:</strong> Check out radios and keys to specific employees with audit logs.',
+			'<strong>Maintenance Ticketing:</strong> Two-sided app for reporting and resolving facility issues.'
+		],
+		connections: ['erp'],
+		pos: { x: 23, y: 77 }
+	},
+	'freelancer': {
+		id: 'freelancer',
+		title: 'Freelancers',
+		role: 'Flex Workers',
+		colorToken: 'freelancer',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>',
+		desc: 'A lightweight, mobile-only app for temporary staff, artists, and event workers to claim shifts without entering the main system.',
+		boards: [
+			'Gig Marketplace', 
+			'GPS Clock-In', 
+			'Earnings Dashboard'
+		],
+		lifecycle: 'Freelancers browse open gigs posted by HR. Upon arrival at the event, they clock in via GPS. Their completed hours are pushed straight into the ERP Payroll system for automatic contractor payout.',
+		in: 'Open gigs (from HR)',
+		out: 'GPS Clock-ins, Timesheets, Invoices',
+		functions: [
+			'<strong>Gig Browsing:</strong> View available daily shifts across different locations.',
+			'<strong>Strict GPS Clock-in:</strong> Ensures workers are physically on-site before starting the timer.',
+			'<strong>Earnings View:</strong> Transparent view of hours worked and pending payments.'
+		],
+		connections: ['erp', 'hr'],
+		pos: { x: 12, y: 50 }
+	},
+	'hr': {
+		id: 'hr',
+		title: 'Enterprise HR',
+		role: 'HR Managers',
+		colorToken: 'hr',
+		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+		desc: 'A massive HR system handling map-based shift scheduling, automated payroll calculation, document tracking, and recruitment.',
+		boards: [
+			'Map-Based Scheduler', 
+			'Automated Payroll', 
+			'Leave Requests', 
+			'Recruitment (ATS)'
+		],
+		lifecycle: 'Receives live GPS clock-ins from Field Staff. Its engine automatically calculates daily rates, applies deductions for lateness, and generates the final Net Salary, pushing it to Finance for payout.',
+		in: 'GPS Clock-ins, Leave Requests, New Resumes',
+		out: 'Payroll calculations, Shift Schedules, Employee Profiles',
+		functions: [
+			'<strong>Automated Payroll:</strong> Calculates base salaries against GPS check-ins and late penalties.',
+			'<strong>Map-Based Scheduling:</strong> Draw physical geofences and set exact permitted GPS radiuses for shifts.',
+			'<strong>Recruitment (ATS):</strong> Kanban pipeline for tracking job applicants and parsing CVs.'
+		],
+		connections: ['erp', 'freelancer', 'field'],
+		pos: { x: 23, y: 23 }
+	}
+};
+
+let activeNodeId = null;
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════════════
+function initExplorer() {
+	const nodesLayer = document.getElementById('nodes-layer');
+	const svgLayer = document.getElementById('svg-layer');
+	
+	// 1. Draw SVG Connections
+	const connections = [
+		['exec', 'erp'],
+		['finance', 'erp'],
+		['marketing', 'erp'],
+		['hr', 'erp'],
+		['field', 'erp'],
+		['support', 'erp'],
+		['freelancer', 'erp'],
+		['comms', 'erp'],
+		// Cross-connections
+		['exec', 'finance'],
+		['marketing', 'finance'],
+		['hr', 'field'],
+		['freelancer', 'hr'],
+		['comms', 'exec']
+	];
+
+	connections.forEach(pair => {
+		const source = ecosystemData[pair[0]].pos;
+		const target = ecosystemData[pair[1]].pos;
+		
+		const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+		line.setAttribute('x1', `${source.x}%`);
+		line.setAttribute('y1', `${source.y}%`);
+		line.setAttribute('x2', `${target.x}%`);
+		line.setAttribute('y2', `${target.y}%`);
+		line.setAttribute('class', 'flow-line');
+		line.setAttribute('id', `line-${pair[0]}-${pair[1]}`);
+		svgLayer.appendChild(line);
+	});
+
+	// 2. Draw Nodes
+	Object.values(ecosystemData).forEach(node => {
+		const el = document.createElement('div');
+		el.className = `node ${node.isCenter ? 'center' : ''} ${node.isWider ? 'exec-node' : ''}`;
+		el.id = `node-${node.id}`;
+		el.style.left = `${node.pos.x}%`;
+		el.style.top = `${node.pos.y}%`;
+		
+		el.innerHTML = `
+			<div class="node-icon" style="color: var(--${node.colorToken})">${node.icon}</div>
+			<div class="node-label" style="${node.isCenter ? 'color: var(--erp);' : ''}">${node.title}</div>
+		`;
+		
+		el.onclick = () => selectNode(node.id);
+		nodesLayer.appendChild(el);
+	});
+
+	// Auto-select ERP to start
+	setTimeout(() => selectNode('erp'), 200);
+}
+
+function selectNode(id) {
+	if(activeNodeId === id) return; 
+	activeNodeId = id;
+	const nodeData = ecosystemData[id];
+
+	// 1. Reset Nodes
+	document.querySelectorAll('.node').forEach(el => {
+		el.classList.remove('active');
+		el.style.borderColor = 'var(--glass-border)';
+		el.style.background = 'var(--glass)';
+		if(el.classList.contains('center')) {
+			el.style.borderColor = 'var(--erp)';
+			el.style.background = 'rgba(255,255,255,0.95)';
+		}
+	});
+	
+	// Highlight Active
+	const activeEl = document.getElementById(`node-${id}`);
+	activeEl.classList.add('active');
+	activeEl.style.borderColor = `var(--${nodeData.colorToken})`;
+	activeEl.style.background = `#ffffff`;
+
+	// 2. Reset Lines
+	document.querySelectorAll('.flow-line').forEach(line => {
+		line.classList.remove('active');
+		line.style.stroke = 'rgba(0,0,0,0.08)';
+		line.style.opacity = '1';
+	});
+
+	// Highlight active connections
+	nodeData.connections.forEach(targetId => {
+		let line = document.getElementById(`line-${id}-${targetId}`) || document.getElementById(`line-${targetId}-${id}`);
+		if(line) {
+			line.classList.add('active');
+			line.style.stroke = `var(--${nodeData.colorToken})`;
+		}
+	});
+
+	// 3. Update Detail Panel
+	const panel = document.getElementById('detail-panel');
+	panel.classList.remove('placeholder');
+	
+	// Build Boards HTML
+	let boardsHtml = nodeData.boards.map(b => `
+		<span class="board-chip">
+			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--${nodeData.colorToken})" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+			${b}
+		</span>
+	`).join('');
+
+	let functionsHtml = nodeData.functions.map(f => `
+		<li>
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--${nodeData.colorToken})" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="background: var(--${nodeData.colorToken}-bg); border-radius:50%; padding:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+			<span>${f}</span>
+		</li>
+	`).join('');
+
+	let connectionsHtml = nodeData.connections.map(targetId => {
+		const tNode = ecosystemData[targetId];
+		return `<span class="sys-tag" onclick="selectNode('${tNode.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--${tNode.colorToken})" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>${tNode.title}</span>`;
+	}).join('');
+
+	panel.innerHTML = `
+		<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 24px;">
+			<div class="tag" style="background:var(--${nodeData.colorToken}-bg); color:var(--${nodeData.colorToken}); border-color:var(--${nodeData.colorToken}-border);">
+				User Role: ${nodeData.role}
+			</div>
+			<div style="color:var(--${nodeData.colorToken}); transform: scale(1.5); transform-origin: top right;">
+				${nodeData.icon}
+			</div>
+		</div>
+		
+		<div class="detail-title">${nodeData.title}</div>
+		<div class="detail-desc">${nodeData.desc}</div>
+		
+		<div class="detail-section-title" style="color:var(--${nodeData.colorToken}); border-bottom-color:var(--${nodeData.colorToken}-bg);">System Boards & Navigation</div>
+		<div class="boards-grid">
+			${boardsHtml}
+		</div>
+
+		<div class="detail-section-title" style="color:var(--${nodeData.colorToken}); border-bottom-color:var(--${nodeData.colorToken}-bg);">Life Cycle & Data Flow</div>
+		<div class="lifecycle-box">
+			${nodeData.lifecycle}
+			<div class="data-flow-row">
+				<span style="color:var(--text); font-weight:800;">DATA IN:</span> ${nodeData.in}
+			</div>
+			<div class="data-flow-row">
+				<span style="color:var(--text); font-weight:800;">DATA OUT:</span> ${nodeData.out}
+			</div>
+		</div>
+
+		<div class="detail-section-title">Core Functions</div>
+		<ul class="function-list">
+			${functionsHtml}
+		</ul>
+		
+		<div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.06);">
+			<div class="detail-section-title">Network Links (Click to jump)</div>
+			<div class="connection-tags">
+				${connectionsHtml}
+			</div>
+		</div>
+	`;
+	
+	// Smooth scroll for mobile
+	if(window.innerWidth <= 1200) {
+		panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	}
+}
+
+// Boot
+window.onload = initExplorer;
 </script>
 
 </body>
