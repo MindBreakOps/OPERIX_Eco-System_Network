@@ -1,604 +1,804 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
-<title>OPERIX Ecosystem Architecture</title>
-<meta name="theme-color" content="#f0eff5">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700;800&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover"/>
+<title>OPERIX — Ecosystem Architecture</title>
+<meta name="theme-color" content="#0c0c0a"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-/* ═══════════════════════════════════════════════════
-   OPERIX — Premium Liquid Glass Tokens (LIGHT MODE)
-═══════════════════════════════════════════════════ */
+/* ── TOKENS ── */
 :root {
-  --bg: #f0eff5;
-  --surface: rgba(255, 255, 255, 0.85);
-  --glass: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.9);
-  --glass2: rgba(255, 255, 255, 0.38);
-  
-  --text: #18161f;
-  --text2: #3d3a4e;
-  --text3: #7c788f;
-  --text4: #b0acbf;
-  
-  /* System Colors - Tuned for Light Mode */
-  --erp: #1d4ed8;       /* Blue */
-  --exec: #d97706;      /* Gold/Amber */
-  --finance: #0f766e;   /* Teal */
-  --marketing: #db2777; /* Pink */
-  --hr: #7c3aed;        /* Purple */
-  --field: #ea580c;     /* Orange */
-  --support: #dc2626;   /* Red */
-  --freelancer: #0d9488;/* Mint */
-  --comms: #2563eb;     /* Royal Blue */
+  --ink:    #0c0c0a;
+  --paper:  #f2ede6;
+  --cream:  #e8e0d5;
+  --rust:   #c94a2a;
+  --rust2:  #a33820;
+  --gold:   #b8902a;
+  --muted:  #7a7268;
+  --border: rgba(242,237,230,0.1);
+  --border2: rgba(242,237,230,0.06);
+  --surface: rgba(22,20,18,0.95);
 
-  --shadow: 0 4px 20px rgba(18, 16, 31, 0.06);
-  --shadow-md: 0 8px 32px rgba(18, 16, 31, 0.08);
-  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.02);
+  /* Module accent colors */
+  --c-hris:      #7c3aed;
+  --c-ops:       #c94a2a;
+  --c-fmis:      #0f766e;
+  --c-it:        #2563eb;
+  --c-exec:      #b8902a;
+  --c-planner:   #ea580c;
+  --c-marketing: #db2777;
+  --c-fields:    #16a34a;
+  --c-code:      #0891b2;
 
-  --r: 20px; --r2: 14px; --r3: 8px;
-  
-  --font-ui: 'Space Grotesk', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'Fira Code', monospace;
+  --ff-d: 'Bebas Neue', sans-serif;
+  --ff-s: 'Playfair Display', serif;
+  --ff-m: 'IBM Plex Mono', monospace;
+  --ff-b: 'Barlow', sans-serif;
 }
 
-body { 
-  font-family: var(--font-body); 
-  background: var(--bg); 
-  color: var(--text); 
-  margin: 0; 
-  -webkit-font-smoothing: antialiased; 
-  min-height: 100vh; 
-  overflow-x: hidden; 
-  background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f0eff5 70%);
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--ff-b);
+  background: var(--ink);
+  color: var(--paper);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-/* Header */
-.app-header {
-  padding: 16px 32px; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center;
+/* GRAIN */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .035;
 }
 
-.container { max-width: 1550px; margin: 0 auto; padding: 40px 24px; }
-.tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); color: var(--text); }
+/* CURSOR */
+#cur {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 10px; height: 10px; background: var(--rust); border-radius: 50%;
+  pointer-events: none;
+  transition: width .25s, height .25s, background .25s, border-radius .25s;
+  transform: translate(-50%,-50%);
+}
+#cur.x { width: 36px; height: 36px; background: transparent; border: 1.5px solid var(--rust); }
 
-/* ═══════════════════════════════════════════════════
-   INTERACTIVE EXPLORER
-═══════════════════════════════════════════════════ */
-.explorer-grid {
-	display: grid;
-	grid-template-columns: 1fr 500px;
-	gap: 40px;
-	align-items: stretch;
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(12,12,10,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+}
+.h-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.h-logo-mark {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--rust); display: flex; align-items: center; justify-content: center;
+}
+.h-logo-mark svg { width: 18px; height: 18px; }
+.h-logo-name {
+  font-family: var(--ff-d); font-size: 1.35rem; letter-spacing: .1em; color: var(--paper);
+}
+.h-logo-name em { color: var(--rust); font-style: normal; }
+.h-meta {
+  font-family: var(--ff-m); font-size: .6rem; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 16px;
+}
+.h-version {
+  background: rgba(201,74,42,.12); border: 1px solid rgba(201,74,42,.25);
+  padding: 3px 10px; border-radius: 4px; color: var(--rust);
+}
+.h-back {
+  font-family: var(--ff-m); font-size: .62rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  border: 1px solid var(--border); padding: .35rem .9rem;
+  transition: color .2s, border-color .2s;
+}
+.h-back:hover { color: var(--paper); border-color: rgba(242,237,230,.25); }
+
+/* PAGE */
+.page { max-width: 1600px; margin: 0 auto; padding: 3rem 2.5rem; }
+
+/* HERO */
+.page-hero { text-align: center; margin-bottom: 4rem; }
+.page-label {
+  font-family: var(--ff-m); font-size: .65rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--rust); margin-bottom: .75rem;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.page-label::before, .page-label::after { content: ''; display: block; width: 28px; height: 1px; background: var(--rust); }
+.page-title {
+  font-family: var(--ff-d); font-size: clamp(3rem, 7vw, 7rem);
+  line-height: .92; letter-spacing: .01em; color: var(--paper);
+  margin-bottom: 1.25rem;
+}
+.page-sub {
+  font-size: .95rem; color: var(--muted); max-width: 560px;
+  margin: 0 auto; line-height: 1.75; font-weight: 300;
 }
 
-@media (max-width: 1200px) {
-	.explorer-grid { grid-template-columns: 1fr; align-items: start; }
+/* STATS ROW */
+.stats-row {
+  display: flex; justify-content: center; gap: 4rem;
+  margin-bottom: 3.5rem; padding: 1.5rem 0;
+  border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2);
+  flex-wrap: wrap;
+}
+.stat-num { font-family: var(--ff-d); font-size: 2.5rem; color: var(--paper); line-height: 1; }
+.stat-num span { color: var(--rust); }
+.stat-label { font-family: var(--ff-m); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+/* EXPLORER LAYOUT */
+.explorer {
+  display: grid; grid-template-columns: 1fr 460px; gap: 1.5rem; align-items: start;
+}
+@media (max-width: 1100px) { .explorer { grid-template-columns: 1fr; } }
+
+/* NETWORK MAP */
+.net-map {
+  position: relative; width: 100%; aspect-ratio: 1 / 1;
+  background: rgba(16,14,12,0.8);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-/* Network Map */
-.network-map {
-	position: relative; width: 100%; min-height: 850px; 
-	background: var(--surface); border: 1px solid var(--glass-border); border-radius: 32px;
-	box-shadow: var(--shadow); backdrop-filter: blur(40px); overflow: hidden;
+/* Grid bg */
+.net-map::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(242,237,230,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242,237,230,.04) 1px, transparent 1px);
+  background-size: 40px 40px; pointer-events: none; z-index: 0;
 }
 
-/* Grid Background */
-.network-map::before {
-	content: ''; position: absolute; inset: 0;
-	background-image: linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-	background-size: 30px 30px; pointer-events: none;
+/* Corner marks */
+.net-map::after {
+  content: ''; position: absolute; inset: 12px;
+  border: 1px solid rgba(242,237,230,.05); pointer-events: none; z-index: 0;
 }
 
-/* SVG Lines */
-.network-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-.flow-line { fill: none; stroke: rgba(0,0,0,0.08); stroke-width: 3; transition: all 0.4s ease; }
-.flow-line.active { stroke-width: 4; stroke-dasharray: 8 8; animation: dataFlow 1s linear infinite; }
-@keyframes dataFlow { to { stroke-dashoffset: -16; } }
+.svg-lines { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.flow-line {
+  fill: none; stroke: rgba(242,237,230,.07); stroke-width: 1.5;
+  transition: stroke .4s, stroke-width .3s, opacity .3s;
+}
+.flow-line.on {
+  stroke-width: 2.5;
+  stroke-dasharray: 6 6;
+  animation: flow 1.2s linear infinite;
+}
+.flow-line.dim { opacity: 0.25; }
+@keyframes flow { to { stroke-dashoffset: -24; } }
 
-/* Standard Nodes */
+/* NODES */
 .node {
-	position: absolute; transform: translate(-50%, -50%);
-	width: 140px; height: 130px; 
-	border-radius: 28px;
-	display: flex; flex-direction: column; align-items: center; justify-content: center;
-	cursor: pointer; z-index: 10; transition: all 0.3s cubic-bezier(.4,0,.2,1);
-	background: var(--glass); border: 1px solid var(--glass-border);
-	box-shadow: var(--shadow);
+  position: absolute; transform: translate(-50%,-50%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100px; height: 90px;
+  background: rgba(22,20,18,0.95);
+  border: 1px solid rgba(242,237,230,.12);
+  border-radius: 4px;
+  cursor: pointer; z-index: 10;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), border-color .3s, box-shadow .3s, background .3s;
+  padding: 8px;
 }
-.node::after {
-	content: ''; position: absolute; inset: -1px; border-radius: inherit;
-	background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 60%); pointer-events: none;
+.node:hover { transform: translate(-50%,-50%) scale(1.06); border-color: rgba(242,237,230,.25); }
+.node.active { transform: translate(-50%,-50%) scale(1.12); z-index: 20; }
+.node.dim { opacity: .35; }
+
+.node-icon { margin-bottom: 7px; display: flex; align-items: center; justify-content: center; }
+.node-lbl {
+  font-family: var(--ff-m); font-size: .52rem; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(242,237,230,.65); text-align: center;
+  line-height: 1.3;
 }
-.node-icon { margin-bottom: 12px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
-.node-label { font-family: var(--font-ui); font-size: 13px; font-weight: 800; color: var(--text); text-align: center; line-height: 1.3; padding: 0 12px; letter-spacing: 0.02em; text-transform: uppercase; }
+.node.active .node-lbl { color: var(--paper); }
 
-.node:hover { transform: translate(-50%, -50%) scale(1.08); background: #ffffff; }
-.node.active { transform: translate(-50%, -50%) scale(1.15); z-index: 20; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-.node.active .node-icon { transform: scale(1.1); }
-
-/* WIDER Exec Node */
-.node.exec-node { width: 190px; height: 140px; }
-
-/* MASSIVE Center Node (ERP) */
-.node.center { width: 240px; height: 180px; border-radius: 40px; background: rgba(255,255,255,0.95); border: 2px solid var(--erp); box-shadow: 0 0 30px rgba(29, 78, 216, 0.15); animation: pulseHub 4s infinite alternate; }
-.node.center .node-label { font-size: 16px; }
-@keyframes pulseHub { 0% { box-shadow: 0 0 20px rgba(29, 78, 216, 0.1); } 100% { box-shadow: 0 0 50px rgba(29, 78, 216, 0.3); } }
-
-/* Detail Panel */
-.detail-panel {
-	background: var(--surface); border: 1px solid var(--glass-border); border-radius: 32px;
-	padding: 32px; box-shadow: var(--shadow-md), var(--shadow-inset); backdrop-filter: blur(40px);
-	height: 100%; display: flex; flex-direction: column;
+/* Center node is bigger */
+.node.center {
+  width: 130px; height: 120px;
+  border-width: 1.5px;
+  animation: hubPulse 3.5s ease-in-out infinite;
 }
-.detail-panel.placeholder { justify-content: center; align-items: center; text-align: center; color: var(--text4); }
-.detail-title { font-family: var(--font-ui); font-size: 32px; font-weight: 800; color: var(--text); margin-bottom: 8px; line-height: 1.1; letter-spacing: -0.02em;}
-.detail-desc { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 24px; font-weight: 500; }
-.detail-section-title { font-size: 11px; color: var(--text3); font-weight: 800; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.06); padding-bottom: 8px; }
+@keyframes hubPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(201,74,42,0); }
+  50%      { box-shadow: 0 0 0 12px rgba(201,74,42,0.06); }
+}
 
-/* Internal Boards Grid */
-.boards-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-.board-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.06); border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--text2); }
+/* DETAIL PANEL */
+.detail {
+  background: rgba(16,14,12,0.9);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  display: flex; flex-direction: column; gap: 0;
+  min-height: 600px;
+  position: sticky; top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: var(--rust) transparent;
+}
 
-.function-list { list-style: none; padding: 0; margin: 0 0 24px 0; }
-.function-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 13px; color: var(--text2); line-height: 1.6; font-weight: 500; }
-.function-list li strong { color: var(--text); font-weight: 700; }
+/* Placeholder state */
+.detail.empty { justify-content: center; align-items: center; text-align: center; }
+.detail-placeholder-icon { margin-bottom: 1.5rem; opacity: .15; }
+.detail-placeholder-title { font-family: var(--ff-d); font-size: 1.8rem; color: var(--muted); letter-spacing: .05em; margin-bottom: .5rem; }
+.detail-placeholder-sub { font-family: var(--ff-m); font-size: .68rem; letter-spacing: .08em; color: var(--muted); opacity: .6; }
 
-.lifecycle-box { background: rgba(255,255,255,0.6); border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; padding: 20px; margin-bottom: 24px; font-size: 13px; line-height: 1.6; color: var(--text2); }
-.data-flow-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text3); }
+/* Detail content */
+.d-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.d-role {
+  font-family: var(--ff-m); font-size: .58rem; letter-spacing: .15em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 2px;
+  border: 1px solid; display: inline-block;
+}
+.d-icon { flex-shrink: 0; }
+.d-title {
+  font-family: var(--ff-d); font-size: 2.4rem; line-height: .92;
+  letter-spacing: .02em; margin-bottom: .6rem;
+}
+.d-desc { font-size: .84rem; line-height: 1.75; color: rgba(242,237,230,.55); font-weight: 300; margin-bottom: 1.5rem; }
 
-.connection-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.sys-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06); cursor: pointer; transition: 0.2s;}
-.sys-tag:hover { background: #ffffff; transform: translateY(-1px); box-shadow: var(--shadow); }
+.d-section {
+  font-family: var(--ff-m); font-size: .58rem; letter-spacing: .18em;
+  text-transform: uppercase; margin-bottom: .9rem;
+  padding-bottom: .5rem; border-bottom: 1px solid var(--border2);
+  display: flex; align-items: center; gap: 8px;
+}
+.d-section::before { content: ''; display: block; width: 14px; height: 1px; }
 
+/* Boards */
+.boards { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.5rem; }
+.board-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  background: rgba(242,237,230,.04); border: 1px solid rgba(242,237,230,.08);
+  font-family: var(--ff-m); font-size: .62rem; letter-spacing: .06em;
+  color: rgba(242,237,230,.6);
+  transition: color .2s, border-color .2s;
+}
+.board-chip:hover { color: var(--paper); border-color: rgba(242,237,230,.2); }
+
+/* Lifecycle */
+.lifecycle-box {
+  background: rgba(242,237,230,.03); border: 1px solid rgba(242,237,230,.07);
+  padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  font-size: .8rem; line-height: 1.75; color: rgba(242,237,230,.5);
+}
+.data-row {
+  font-family: var(--ff-m); font-size: .6rem; letter-spacing: .06em;
+  display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; flex-wrap: wrap;
+}
+.data-row-label { color: var(--paper); font-weight: 600; flex-shrink: 0; }
+.data-row-val { color: rgba(242,237,230,.45); }
+
+/* Functions */
+.func-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+.func-list li {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: .8rem; line-height: 1.65; color: rgba(242,237,230,.5);
+}
+.func-bullet { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: .45em; }
+.func-list li strong { color: var(--paper); font-weight: 500; }
+
+/* Connections */
+.conn-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border2); }
+.conn-tag {
+  font-family: var(--ff-m); font-size: .6rem; letter-spacing: .08em;
+  text-transform: uppercase; padding: 5px 10px; border: 1px solid;
+  cursor: pointer; transition: color .2s, background .2s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.conn-tag-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--rust); border-radius: 2px; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  header { padding: .85rem 1.25rem; }
+  .h-meta .h-back { display: none; }
+  .page { padding: 2rem 1.25rem; }
+  .stats-row { gap: 2rem; }
+  .node { width: 72px; height: 64px; }
+  .node.center { width: 96px; height: 86px; }
+  .node-lbl { font-size: .44rem; }
+  .detail { position: static; max-height: none; min-height: unset; }
+}
 </style>
 </head>
 <body>
+<div id="cur"></div>
 
-<div class="app-header">
-  <div style="display: flex; align-items: center; gap: 14px;">
-	<img src="https://raw.githubusercontent.com/MindBreakOps/LX-Permits/main/imind.png" alt="OPERIX Logo" style="width: 40px; height: 40px; border-radius: 12px; background: #fff; padding: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-	<div style="font-family: var(--font-ui); font-size: 22px; font-weight: 800; letter-spacing: -0.02em;">OPERIX <span style="color:var(--exec);">ECOSYSTEM</span></div>
+<!-- HEADER -->
+<header>
+  <a href="#" class="h-logo">
+    <div class="h-logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+    </div>
+    <div class="h-logo-name">OPERIX <em>ECOSYSTEM</em></div>
+  </a>
+  <div class="h-meta">
+    <span class="h-version">v7.2.1 ARCHITECTURE</span>
+    <a href="#" class="h-back">← Back to Portfolio</a>
   </div>
-  <div style="font-size: 12px; font-family: var(--font-mono); color: var(--text4); font-weight: 600;">v7.2.1 ARCHITECTURE</div>
-</div>
+</header>
 
-<div class="container">
-  
-  <div style="text-align: center; margin-bottom: 60px;">
-	<h1 style="font-family: var(--font-ui); font-size: 48px; font-weight: 800; color: var(--text); margin-bottom: 16px; line-height: 1.1; letter-spacing: -0.02em;">The Intelligence Network</h1>
-	<p style="font-size: 16px; color: var(--text3); max-width: 700px; margin: 0 auto; line-height: 1.7; font-weight: 500;">
-	  Explore the operational architecture of OPERIX. Click any node on the network map to view its simulated internal boards, data flows, and routing infrastructure.
-	</p>
-  </div>
+<!-- PAGE -->
+<div class="page">
 
-  <div class="explorer-grid">
-	  
-	  <div class="network-map" id="network-container">
-		  <svg class="network-lines" id="svg-layer"></svg>
-		  <div id="nodes-layer"></div>
-	  </div>
-
-	  <div class="detail-panel placeholder" id="detail-panel">
-		  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="opacity:0.2; margin-bottom:20px; color: var(--text3);">
-			  <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
-		  </svg>
-		  <div style="font-family: var(--font-ui); font-size: 20px; font-weight: 800; color: var(--text2);">Awaiting Telemetry</div>
-		  <div style="font-size: 14px; margin-top: 8px; max-width: 280px; line-height: 1.6;">Initialize a connection by selecting a system node on the network map.</div>
-	  </div>
-
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="page-label">Intelligence Network</div>
+    <h1 class="page-title">THE<br>ARCHITECTURE</h1>
+    <p class="page-sub">Select any node on the network map to explore its internal boards, data flows, lifecycle, and connections across the unified ecosystem.</p>
   </div>
 
+  <!-- STATS -->
+  <div class="stats-row">
+    <div><div class="stat-num">9</div><div class="stat-label">Modules</div></div>
+    <div><div class="stat-num">1</div><div class="stat-label">Unified Server</div></div>
+    <div><div class="stat-num"><span>∞</span></div><div class="stat-label">Cross-Module Sync</div></div>
+    <div><div class="stat-num">LIVE</div><div class="stat-label">Deployment Status</div></div>
+  </div>
+
+  <!-- EXPLORER -->
+  <div class="explorer">
+
+    <!-- NETWORK MAP -->
+    <div class="net-map" id="net-map">
+      <svg class="svg-lines" id="svg-layer"></svg>
+      <div id="nodes-layer"></div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div class="detail empty" id="detail">
+      <div class="detail-placeholder-icon">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+          <polyline points="2 17 12 22 22 17"/>
+          <polyline points="2 12 12 17 22 12"/>
+        </svg>
+      </div>
+      <div class="detail-placeholder-title">AWAITING TELEMETRY</div>
+      <div class="detail-placeholder-sub">Select a system node to initialize</div>
+    </div>
+
+  </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// COMPLETE ECOSYSTEM DATA DICTIONARY (WITH DETAILED BOARDS)
-// ═══════════════════════════════════════════════════════════════
-const ecosystemData = {
-	'erp': {
-		id: 'erp',
-		title: 'OPERIX Suite (Main ERP)',
-		role: 'Admins & Managers',
-		colorToken: 'erp',
-		isCenter: true,
-		icon: '<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
-		desc: 'The central nervous system of OPERIX. It houses the Supabase SQL database, authenticates users, routes APIs, and maintains the absolute source of truth for the entire company.',
-		boards: [
-			'Global Projects Hub', 
-			'HR Directory & Payroll', 
-			'Accounting & FMIS', 
-			'Tasks & Kanban', 
-			'Document Studio',
-			'Analytics & Export'
-		],
-		lifecycle: 'All peripheral applications ping this central hub. It validates their JWT tokens, processes their data inputs, and stores the records safely. It then serves this cleaned, aggregated data out to the Executive and Financial dashboards.',
-		in: 'Raw logs, Invoices, GPS pings, Support tickets',
-		out: 'Aggregated KPIs, Authenticated Tokens, Payroll numbers',
-		functions: [
-			'<strong>Supabase Engine:</strong> Real-time PostgreSQL database with Row Level Security.',
-			'<strong>Authentication (2FA):</strong> Handles secure logins, OTP generation, and trusted device fingerprinting.',
-			'<strong>Project Setup:</strong> The master switchboard where new client workspaces and API endpoints are configured.'
-		],
-		connections: ['exec', 'finance', 'marketing', 'hr', 'field', 'support', 'freelancer', 'comms'],
-		pos: { x: 50, y: 50 }
-	},
-	'exec': {
-		id: 'exec',
-		title: 'Executive Command',
-		role: 'C-Level & Directors',
-		colorToken: 'exec',
-		isWider: true,
-		icon: '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
-		desc: 'A secure, high-level viewport providing complete transparency over global operations, finances, and departmental health without granular noise.',
-		boards: [
-			'Global Operations Dash', 
-			'Project Leadership Matrix', 
-			'Financial Telemetry', 
-			'AI Email Writer',
-			'Leave & OKRs'
-		],
-		lifecycle: 'Pulls pre-aggregated telemetry directly from the Core ERP. Executives use this to make macro-decisions, assign Project Directors to new sites, and broadcast company-wide AI-generated emails back down the chain.',
-		in: 'Global KPIs, Open Tickets, HR Leave counts, Revenue',
-		out: 'Project Manager assignments, Company-wide emails, Approvals',
-		functions: [
-			'<strong>Global Dashboards:</strong> Live YTD revenue vs expenses visual charts.',
-			'<strong>Project Leadership:</strong> Assign Operation Managers to active projects globally.',
-			'<strong>AI Email Writer:</strong> Draft, format, and broadcast corporate announcements using AI.'
-		],
-		connections: ['erp', 'finance'],
-		pos: { x: 50, y: 12 }
-	},
-	'finance': {
-		id: 'finance',
-		title: 'Accounting (FMIS)',
-		role: 'Accountants & Auditors',
-		colorToken: 'finance',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
-		desc: 'The Financial Management Information System (FMIS). Handles P&L, expense tracking, payroll execution, and asset valuation.',
-		boards: [
-			'Project P&L Dashboard', 
-			'Salaries & Wages', 
-			'Expense Tracking', 
-			'Asset Valuation',
-			'Clearance Logs'
-		],
-		lifecycle: 'Automatically catches revenue invoices pushed by Field Operators and payroll data calculated by HR. Accountants verify the numbers, process clearances, and export official financial reports for the Executive Command.',
-		in: 'Valet Revenue, Payroll numbers, Supplier invoices',
-		out: 'P&L Statements, Clearances, Asset Valuation (SAR)',
-		functions: [
-			'<strong>Revenue Reconciliation:</strong> Verifies incoming cash flows from field operations.',
-			'<strong>Payroll Execution:</strong> Finalizes and distributes the salaries calculated by the HR module.',
-			'<strong>Data Export:</strong> Generates unified XLSX/CSV financial reports per project.'
-		],
-		connections: ['erp', 'exec', 'marketing'],
-		pos: { x: 77, y: 23 }
-	},
-	'marketing': {
-		id: 'marketing',
-		title: 'Generators & CRM',
-		role: 'Sales Reps & Directors',
-		colorToken: 'marketing',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>',
-		desc: 'Code-free generation of official business documents and the CRM outreach hub for tracking lead conversions.',
-		boards: [
-			'Document Studio', 
-			'Contracts Builder (Directors)', 
-			'Lead Kanban', 
-			'Sales Quotations'
-		],
-		lifecycle: 'Sales reps log potential leads. When a deal is closed, Project Directors use the Contracts Builder to generate binding agreements via Document Studio. The financial metadata is pushed to the Accounting board.',
-		in: 'Client requests, Market data',
-		out: 'New Projects, Sales Quotes, Signed Contracts',
-		functions: [
-			'<strong>Contracts Builder:</strong> Specialized board for Project Directors to draft scopes of work.',
-			'<strong>Document Studio:</strong> Rich text editor with digital stamps for letters and offers.',
-			'<strong>Lead Kanban:</strong> Drag-and-drop pipeline for tracking potential clients.'
-		],
-		connections: ['erp', 'finance'],
-		pos: { x: 88, y: 50 }
-	},
-	'comms': {
-		id: 'comms',
-		title: 'Internal Comms',
-		role: 'All Employees',
-		colorToken: 'comms',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
-		desc: 'Secure internal messaging system with custom HTML signatures, drive attachment handling, and history logs.',
-		boards: [
-			'Secure Inbox', 
-			'Drafts & Sent', 
-			'HTML Signature Builder', 
-			'External Bridge (Gmail)'
-		],
-		lifecycle: 'Operates as a standalone messaging node hooked into the GAS API. It allows staff to build branded signatures and instantly beam updates to other users or external clients via the Gmail bridge.',
-		in: 'Internal Messages, Shared Documents',
-		out: 'Broadcasts, External Client Emails',
-		functions: [
-			'<strong>Signature Builder:</strong> Generate rich-text, branded OPERIX signatures with employee photos.',
-			'<strong>Cloud Attachments:</strong> Seamlessly upload files to Google Drive and link them in messages.',
-			'<strong>External Bridge:</strong> Pre-formats emails and copies HTML signatures to clipboard for external sending.'
-		],
-		connections: ['erp', 'exec'],
-		pos: { x: 77, y: 77 }
-	},
-	'field': {
-		id: 'field',
-		title: 'Field Operations',
-		role: 'Valets & Operators',
-		colorToken: 'field',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 6V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="10" y1="13" x2="14" y2="13"/></svg>',
-		desc: 'The frontline execution platform. A mobile-optimized web app used outdoors by staff to manage vehicle logistics and ticketing.',
-		boards: [
-			'Live ANPR Scanner', 
-			'Valet Ticketing', 
-			'Active Vehicle Tracking', 
-			'Geofenced ESS Clock-In'
-		],
-		lifecycle: 'Operators use device cameras to scan plates. When a car is returned and paid for, the app instantly fires the revenue data to the Finance Board and the operational stats to the Executive Command.',
-		in: 'Client cars, Shift schedules (from HR)',
-		out: 'Digital Invoices, Live telemetry, Revenue data',
-		functions: [
-			'<strong>ANPR Scanner:</strong> Automated License Plate Recognition using mobile cameras.',
-			'<strong>Digital Ticketing:</strong> Generates and prints smart parking tickets with QR codes.',
-			'<strong>Geofenced ESS:</strong> Employee Self-Service portal for clocking into shifts.'
-		],
-		connections: ['erp', 'hr'],
-		pos: { x: 50, y: 88 }
-	},
-	'support': {
-		id: 'support',
-		title: 'Support & Hardware',
-		role: 'Techs & IT',
-		colorToken: 'support',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
-		desc: 'The logistical backbone tracking physical assets, cafe inventory, and managing facility repair requests.',
-		boards: [
-			'Issue Triage (Kanban)', 
-			'Inventory Tracking', 
-			'Asset Check-in/out', 
-			'Cafe Stock Alerts'
-		],
-		lifecycle: 'Staff report broken hardware here. IT resolves the tickets and updates inventory. Physical asset values are synced with the Finance board for depreciation tracking.',
-		in: 'Broken equipment reports, Low stock alerts',
-		out: 'Resolved tickets, Restock orders, Asset logs',
-		functions: [
-			'<strong>Inventory Tracking:</strong> Manage cafe stock and operational equipment with low-stock warnings.',
-			'<strong>Asset Allocation:</strong> Check out radios and keys to specific employees with audit logs.',
-			'<strong>Maintenance Ticketing:</strong> Two-sided app for reporting and resolving facility issues.'
-		],
-		connections: ['erp'],
-		pos: { x: 23, y: 77 }
-	},
-	'freelancer': {
-		id: 'freelancer',
-		title: 'Freelancers',
-		role: 'Flex Workers',
-		colorToken: 'freelancer',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>',
-		desc: 'A lightweight, mobile-only app for temporary staff, artists, and event workers to claim shifts without entering the main system.',
-		boards: [
-			'Gig Marketplace', 
-			'GPS Clock-In', 
-			'Earnings Dashboard'
-		],
-		lifecycle: 'Freelancers browse open gigs posted by HR. Upon arrival at the event, they clock in via GPS. Their completed hours are pushed straight into the ERP Payroll system for automatic contractor payout.',
-		in: 'Open gigs (from HR)',
-		out: 'GPS Clock-ins, Timesheets, Invoices',
-		functions: [
-			'<strong>Gig Browsing:</strong> View available daily shifts across different locations.',
-			'<strong>Strict GPS Clock-in:</strong> Ensures workers are physically on-site before starting the timer.',
-			'<strong>Earnings View:</strong> Transparent view of hours worked and pending payments.'
-		],
-		connections: ['erp', 'hr'],
-		pos: { x: 12, y: 50 }
-	},
-	'hr': {
-		id: 'hr',
-		title: 'Enterprise HR',
-		role: 'HR Managers',
-		colorToken: 'hr',
-		icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-		desc: 'A massive HR system handling map-based shift scheduling, automated payroll calculation, document tracking, and recruitment.',
-		boards: [
-			'Map-Based Scheduler', 
-			'Automated Payroll', 
-			'Leave Requests', 
-			'Recruitment (ATS)'
-		],
-		lifecycle: 'Receives live GPS clock-ins from Field Staff. Its engine automatically calculates daily rates, applies deductions for lateness, and generates the final Net Salary, pushing it to Finance for payout.',
-		in: 'GPS Clock-ins, Leave Requests, New Resumes',
-		out: 'Payroll calculations, Shift Schedules, Employee Profiles',
-		functions: [
-			'<strong>Automated Payroll:</strong> Calculates base salaries against GPS check-ins and late penalties.',
-			'<strong>Map-Based Scheduling:</strong> Draw physical geofences and set exact permitted GPS radiuses for shifts.',
-			'<strong>Recruitment (ATS):</strong> Kanban pipeline for tracking job applicants and parsing CVs.'
-		],
-		connections: ['erp', 'freelancer', 'field'],
-		pos: { x: 23, y: 23 }
-	}
+// ═══════════════════════════════════════════════════
+// MODULE DATA
+// ═══════════════════════════════════════════════════
+const MODS = {
+
+  core: {
+    id: 'core', label: 'OPERIX\nCORE', isCenter: true,
+    color: '#c94a2a', role: 'Admins & Architects',
+    title: 'OPERIX Core Server',
+    desc: 'The central nervous system of the entire ecosystem. Hosts the Supabase PostgreSQL engine, authenticates all users with JWT + 2FA, routes APIs between modules, and maintains the absolute single source of truth for every record in the organization.',
+    boards: ['Global Dashboard', 'Project Hub', 'User Directory', 'Auth & Roles', 'System Config', 'Audit Logs'],
+    lifecycle: 'All 9 peripheral modules authenticate through this hub. It validates tokens, processes inputs from field operations, and aggregates data for executive and financial dashboards. Every record — from a GPS clock-in to a signed contract — is stored and routed here.',
+    dataIn: 'Raw logs, GPS pings, Invoices, API calls from all modules',
+    dataOut: 'Aggregated KPIs, Auth tokens, Payroll numbers, Cross-module data',
+    functions: [
+      '<strong>Supabase Engine:</strong> Real-time PostgreSQL with Row Level Security and live subscriptions.',
+      '<strong>Auth (JWT + 2FA):</strong> Secure logins, OTP, trusted device fingerprinting for all 9 modules.',
+      '<strong>Project Setup:</strong> Master switchboard where new client workspaces and API endpoints are provisioned.',
+    ],
+    connections: ['hris','ops','fmis','it','exec','planner','marketing','fields','code'],
+    pos: { x: 50, y: 50 }
+  },
+
+  hris: {
+    id: 'hris', label: 'HRIS', color: '#7c3aed', role: 'HR Managers',
+    title: 'OPERIX HRIS',
+    desc: 'Enterprise Human Resources Information System. Handles the full employee lifecycle — from GPS-fenced attendance and automated salary deductions to shift scheduling, recruitment, and document tracking.',
+    boards: ['Attendance Board', 'Payroll Engine', 'Shift Scheduler', 'ESS Portal', 'Recruitment (ATS)', 'Document Tracker'],
+    lifecycle: 'Receives GPS clock-in pings from field staff. The payroll engine automatically calculates daily rates, applies late/absence deductions, and generates net salary figures — pushing them to FMIS for final disbursement.',
+    dataIn: 'GPS clock-ins, Leave requests, New CVs, Shift confirmations',
+    dataOut: 'Payroll figures, Shift schedules, Employee profiles, Deduction logs',
+    functions: [
+      '<strong>GPS Payroll Engine:</strong> Auto-calculates salaries from check-in data with configurable deduction rules.',
+      '<strong>Map-Based Scheduling:</strong> Draw geofences and assign staff to exact GPS-bounded locations.',
+      '<strong>Recruitment ATS:</strong> Kanban pipeline for tracking applicants from CV to onboarding.',
+    ],
+    connections: ['core','fields','fmis','planner'],
+    pos: { x: 20, y: 22 }
+  },
+
+  ops: {
+    id: 'ops', label: 'OPERATIONS', color: '#c94a2a', role: 'Ops Managers',
+    title: 'OPERIX Operations',
+    desc: 'Core operations command center. Covers ANPR-powered parking and valet management, live vehicle tracking, gate logging, and field supervisor dashboards — the frontline execution hub.',
+    boards: ['ANPR Scanner', 'Valet Ticketing', 'Vehicle Tracker', 'Gate Log', 'Revenue Dashboard', 'Supervisor Board'],
+    lifecycle: 'Operators scan plates via live camera. The system auto-generates digital tickets, calculates dynamic parking fees, and fires revenue data to FMIS. Valet performance stats update in real time on the supervisor dashboard.',
+    dataIn: 'Camera feed, Plate numbers, Entry/exit events',
+    dataOut: 'Digital tickets, Revenue data, QR invoices, Valet stats',
+    functions: [
+      '<strong>Live ANPR:</strong> Automated plate recognition via mobile/fixed camera with instant gate logging.',
+      '<strong>Dynamic Pricing:</strong> Calculates fees based on duration, vehicle type, and zone rules.',
+      '<strong>Valet Leaderboard:</strong> Real-time per-operator performance: operations count and revenue generated.',
+    ],
+    connections: ['core','hris','fmis','fields'],
+    pos: { x: 80, y: 22 }
+  },
+
+  fmis: {
+    id: 'fmis', label: 'FMIS', color: '#0f766e', role: 'Accountants & Auditors',
+    title: 'OPERIX FMIS',
+    desc: 'Financial Management Information System. Admin-only hub for P&L tracking, expense management, payroll disbursement, asset valuation, and automated financial reporting — per project.',
+    boards: ['P&L Dashboard', 'Salary & Wages', 'Expense Tracker', 'Asset Valuation', 'Clearance Logs', 'Export Center'],
+    lifecycle: 'Catches revenue pushed by Operations and payroll numbers from HRIS. Accountants verify, apply clearances, and run one-click exports for formal financial reports submitted to Executive Suite.',
+    dataIn: 'Payroll numbers (HRIS), Revenue (Ops), Supplier invoices',
+    dataOut: 'P&L statements, XLSX/CSV reports, Asset values, Clearance records',
+    functions: [
+      '<strong>Net Balance Live:</strong> Assets − Salaries − Expenses calculated in real time per project.',
+      '<strong>One-Click Export:</strong> Full-detail XLSX and CSV reports with project-level filtering.',
+      '<strong>Clearance Management:</strong> Tracks asset handovers, final settlements, and audit trails.',
+    ],
+    connections: ['core','hris','ops','exec'],
+    pos: { x: 82, y: 50 }
+  },
+
+  it: {
+    id: 'it', label: 'IT MODULE', color: '#2563eb', role: 'IT & Technicians',
+    title: 'OPERIX IT',
+    desc: 'IT asset management and support ticketing platform. Tracks all hardware — laptops, phones, servers, printers — manages license expirations, and routes facility repair requests through a priority Kanban board.',
+    boards: ['Ticket Triage (Kanban)', 'Asset Registry', 'License Tracker', 'Maintenance Log', 'Cafe Stock Alerts', 'Check-In/Out'],
+    lifecycle: 'Staff submit hardware issues or inventory alerts. IT resolves via priority triage (High/Med/Low) and updates the asset registry. Physical asset values sync with FMIS for depreciation tracking and budget allocation.',
+    dataIn: 'Broken equipment reports, Low stock alerts, License dates',
+    dataOut: 'Resolved tickets, Restock orders, Asset depreciation data',
+    functions: [
+      '<strong>Priority Triage:</strong> Kanban board (High / Med / Low / Done) for all support issues.',
+      '<strong>Asset Registry:</strong> Complete hardware inventory with serial numbers and check-out logs.',
+      '<strong>License Tracking:</strong> Expiry alerts with 60-day advance warnings for all subscriptions.',
+    ],
+    connections: ['core','fmis','exec'],
+    pos: { x: 80, y: 78 }
+  },
+
+  exec: {
+    id: 'exec', label: 'EXECUTIVE', color: '#b8902a', role: 'C-Level & Directors',
+    title: 'OPERIX Executive Suite',
+    desc: 'C-level command center with complete operational transparency. Real-time gauge dashboards, cross-module KPI aggregation, automated board report generation, and priority alert feeds — macro decision-making without operational noise.',
+    boards: ['Global Ops Dashboard', 'Financial Telemetry', 'Project Leadership Matrix', 'AI Report Writer', 'OKR Tracker', 'Alert Feed'],
+    lifecycle: 'Pulls pre-aggregated telemetry from the Core and FMIS. Executives assign Project Directors to sites, approve budgets, and broadcast company-wide announcements. Board reports are auto-generated as PDFs from live data.',
+    dataIn: 'Aggregated KPIs (all modules), Open tickets, Revenue figures, Attendance rates',
+    dataOut: 'PM assignments, Budget approvals, Company broadcasts, Board PDFs',
+    functions: [
+      '<strong>Health Gauges:</strong> Live operational health meters for Attendance, Budget, OPS KPIs.',
+      '<strong>Project Leadership:</strong> Assign Operation Managers globally to active project sites.',
+      '<strong>AI Report Writer:</strong> Draft and broadcast corporate announcements with AI assistance.',
+    ],
+    connections: ['core','fmis','it','planner'],
+    pos: { x: 50, y: 88 }
+  },
+
+  planner: {
+    id: 'planner', label: 'PLANNER', color: '#ea580c', role: 'Project Managers',
+    title: 'OPERIX Planner',
+    desc: 'Project and task management built for cross-functional operations teams. Kanban boards, milestone tracking, sprint planning, and cross-module task assignments — with full accountability and completion trails.',
+    boards: ['Kanban Board', 'Milestone Tracker', 'Sprint Planner', 'Task Assignment', 'Progress Reports', 'Backlog'],
+    lifecycle: 'Project Managers receive assignments from Executive Suite and break them into tasks across modules. Progress updates flow back to the Executive dashboard. Cross-module tasks link directly to HRIS shifts and Field jobs.',
+    dataIn: 'Project assignments (Exec), Field job updates, Task submissions',
+    dataOut: 'Task statuses, Sprint reports, Milestone completion notifications',
+    functions: [
+      '<strong>Kanban (4-stage):</strong> Backlog → In Progress → Review → Done with drag-and-drop.',
+      '<strong>Milestone Alerts:</strong> Deadline tracking with automated breach warnings.',
+      '<strong>Cross-Module Linking:</strong> Tasks reference HRIS shifts, Field jobs, and IT tickets directly.',
+    ],
+    connections: ['core','exec','hris','fields','marketing'],
+    pos: { x: 20, y: 78 }
+  },
+
+  marketing: {
+    id: 'marketing', label: 'MARKETING', color: '#db2777', role: 'Sales Reps & Directors',
+    title: 'OPERIX Marketing',
+    desc: 'Campaign management and lead pipeline CRM. From awareness to signed contract — tracks every prospect through the funnel, manages active campaigns, and generates proposals via Document Studio integration.',
+    boards: ['Lead Kanban', 'Campaign Manager', 'Document Studio', 'Contracts Builder', 'Quotations', 'Analytics'],
+    lifecycle: 'Sales reps log leads and run campaigns. When a deal closes, Directors use Contracts Builder to generate binding agreements. Financial metadata from signed deals is pushed to FMIS for revenue tracking.',
+    dataIn: 'Market data, Client inquiries, Campaign performance',
+    dataOut: 'New projects, Signed contracts, Revenue events (→FMIS)',
+    functions: [
+      '<strong>Lead Funnel:</strong> Awareness → Interest → Lead → Client with conversion analytics.',
+      '<strong>Contracts Builder:</strong> Director-only tool to draft scopes of work with digital stamps.',
+      '<strong>Campaign Tracker:</strong> Schedule, activate, and measure marketing campaigns with ROI.',
+    ],
+    connections: ['core','fmis','planner'],
+    pos: { x: 18, y: 50 }
+  },
+
+  fields: {
+    id: 'fields', label: 'FIELDS', color: '#16a34a', role: 'Field Agents & Dispatchers',
+    title: 'OPERIX Fields',
+    desc: 'Field team command center for real-world operations. Live GPS agent tracking, job dispatch and routing, completion verification, and SLA compliance monitoring — optimized for mobile outdoor use.',
+    boards: ['Live GPS Map', 'Job Dispatch', 'Job Board', 'SLA Monitor', 'Agent Reports', 'Geofenced Clock-In'],
+    lifecycle: 'Dispatchers post jobs from Core. Field agents view assignments on mobile, clock in via GPS, and mark jobs complete. Completion data triggers invoicing in FMIS and updates HRIS attendance records automatically.',
+    dataIn: 'Job assignments (Ops/Core), Shift schedules (HRIS)',
+    dataOut: 'GPS clock-ins, Job completions, SLA reports, Revenue triggers',
+    functions: [
+      '<strong>Live GPS Map:</strong> Real-time agent positions on map grid with status indicators.',
+      '<strong>Job Dispatch:</strong> Assign jobs with priority routing — Pending → En Route → Complete.',
+      '<strong>SLA Compliance:</strong> Automated breach detection with manager alert escalation.',
+    ],
+    connections: ['core','hris','ops','planner'],
+    pos: { x: 50, y: 12 }
+  },
+
+  code: {
+    id: 'code', label: 'CODE\nSTUDIO', color: '#0891b2', role: 'Developers & Admins',
+    title: 'OPERIX Code Studio',
+    desc: 'Internal development workspace for building, testing, and managing automation scripts, reusable function templates, and custom utilities that power and extend the rest of the OPERIX ecosystem.',
+    boards: ['Script Editor', 'Template Library', 'Automation Builder', 'Version Control', 'Live Console', 'Deploy Manager'],
+    lifecycle: 'Developers write and test scripts in the browser IDE. Templates are deployed as shared utilities across modules (e.g., payroll engine, ANPR parser, report builder). The console validates logic before pushing to the Core server.',
+    dataIn: 'Module API specs, Bug reports, Automation triggers',
+    dataOut: 'Deployed scripts, Automation rules, Shared utility functions',
+    functions: [
+      '<strong>Browser IDE:</strong> In-app code editor with syntax highlighting for JS automation scripts.',
+      '<strong>Template Library:</strong> Shared reusable functions: payroll calc, ANPR parser, report builder.',
+      '<strong>Automation Builder:</strong> No-code/low-code trigger builder for cross-module workflows.',
+    ],
+    connections: ['core','hris','ops','fmis'],
+    pos: { x: 50, y: 50 } // overridden below — handled as inner ring offset
+  }
+
 };
 
-let activeNodeId = null;
+// ═══════════════════════════════════════════════════
+// POSITION OVERRIDES (percent of map)
+// ═══════════════════════════════════════════════════
+const POSITIONS = {
+  core:      { x: 50, y: 50 },
+  fields:    { x: 50, y: 11 },
+  hris:      { x: 20, y: 22 },
+  ops:       { x: 80, y: 22 },
+  marketing: { x: 11, y: 50 },
+  fmis:      { x: 89, y: 50 },
+  planner:   { x: 20, y: 78 },
+  it:        { x: 80, y: 78 },
+  exec:      { x: 50, y: 89 },
+  code:      { x: 50, y: 50 } // same as core = not rendered as separate? No — render at 32,62
+};
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER ENGINE
-// ═══════════════════════════════════════════════════════════════
-function initExplorer() {
-	const nodesLayer = document.getElementById('nodes-layer');
-	const svgLayer = document.getElementById('svg-layer');
-	
-	// 1. Draw SVG Connections
-	const connections = [
-		['exec', 'erp'],
-		['finance', 'erp'],
-		['marketing', 'erp'],
-		['hr', 'erp'],
-		['field', 'erp'],
-		['support', 'erp'],
-		['freelancer', 'erp'],
-		['comms', 'erp'],
-		// Cross-connections
-		['exec', 'finance'],
-		['marketing', 'finance'],
-		['hr', 'field'],
-		['freelancer', 'hr'],
-		['comms', 'exec']
-	];
+// Manually set code studio nearby
+MODS.code.pos = { x: 35, y: 65 };
 
-	connections.forEach(pair => {
-		const source = ecosystemData[pair[0]].pos;
-		const target = ecosystemData[pair[1]].pos;
-		
-		const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-		line.setAttribute('x1', `${source.x}%`);
-		line.setAttribute('y1', `${source.y}%`);
-		line.setAttribute('x2', `${target.x}%`);
-		line.setAttribute('y2', `${target.y}%`);
-		line.setAttribute('class', 'flow-line');
-		line.setAttribute('id', `line-${pair[0]}-${pair[1]}`);
-		svgLayer.appendChild(line);
-	});
+// ═══════════════════════════════════════════════════
+// CONNECTIONS
+// ═══════════════════════════════════════════════════
+const CONNECTIONS = [
+  ['core','fields'], ['core','hris'], ['core','ops'],
+  ['core','marketing'], ['core','fmis'], ['core','planner'],
+  ['core','it'], ['core','exec'], ['core','code'],
+  // Cross-links
+  ['hris','fields'], ['hris','fmis'], ['hris','planner'],
+  ['ops','fmis'], ['ops','fields'],
+  ['fmis','exec'], ['it','exec'], ['it','fmis'],
+  ['planner','exec'], ['planner','fields'], ['planner','marketing'],
+  ['marketing','fmis'],
+  ['code','hris'], ['code','ops'], ['code','fmis'],
+];
 
-	// 2. Draw Nodes
-	Object.values(ecosystemData).forEach(node => {
-		const el = document.createElement('div');
-		el.className = `node ${node.isCenter ? 'center' : ''} ${node.isWider ? 'exec-node' : ''}`;
-		el.id = `node-${node.id}`;
-		el.style.left = `${node.pos.x}%`;
-		el.style.top = `${node.pos.y}%`;
-		
-		el.innerHTML = `
-			<div class="node-icon" style="color: var(--${node.colorToken})">${node.icon}</div>
-			<div class="node-label" style="${node.isCenter ? 'color: var(--erp);' : ''}">${node.title}</div>
-		`;
-		
-		el.onclick = () => selectNode(node.id);
-		nodesLayer.appendChild(el);
-	});
+// ═══════════════════════════════════════════════════
+// MODULE ICONS (inline SVG)
+// ═══════════════════════════════════════════════════
+const ICONS = {
+  core:      `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+  hris:      `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  ops:       `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M7 6V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2"/><line x1="12" y1="11" x2="12" y2="15"/><line x1="10" y1="13" x2="14" y2="13"/></svg>`,
+  fmis:      `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  it:        `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  exec:      `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  planner:   `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg>`,
+  marketing: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>`,
+  fields:    `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`,
+  code:      `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+};
 
-	// Auto-select ERP to start
-	setTimeout(() => selectNode('erp'), 200);
+// ═══════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════
+let active = null;
+
+function boot() {
+  const map = document.getElementById('net-map');
+  const svg = document.getElementById('svg-layer');
+  const nodesLayer = document.getElementById('nodes-layer');
+
+  // Apply positions
+  Object.keys(POSITIONS).forEach(id => {
+    if(MODS[id]) MODS[id].pos = POSITIONS[id];
+  });
+  MODS.code.pos = { x: 50, y: 50 }; // code lives inside center, give it a different spot
+  // Actually place code at a visible satellite position
+  MODS.code.pos = { x: 34, y: 64 };
+
+  // Draw lines
+  CONNECTIONS.forEach(([a,b]) => {
+    const ma = MODS[a], mb = MODS[b];
+    if(!ma||!mb) return;
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', ma.pos.x+'%');
+    line.setAttribute('y1', ma.pos.y+'%');
+    line.setAttribute('x2', mb.pos.x+'%');
+    line.setAttribute('y2', mb.pos.y+'%');
+    line.setAttribute('class','flow-line');
+    line.dataset.a = a; line.dataset.b = b;
+    svg.appendChild(line);
+  });
+
+  // Draw nodes
+  Object.values(MODS).forEach(m => {
+    const el = document.createElement('div');
+    el.className = `node ${m.isCenter ? 'center' : ''}`;
+    el.id = 'n-'+m.id;
+    el.style.left = m.pos.x+'%';
+    el.style.top  = m.pos.y+'%';
+    el.style.setProperty('--nc', m.color);
+
+    const lines = m.label.split('\n');
+    el.innerHTML = `
+      <div class="node-icon" style="color:${m.color}">${ICONS[m.id]||''}</div>
+      <div class="node-lbl">${lines.join('<br>')}</div>
+    `;
+
+    el.addEventListener('click', () => select(m.id));
+    el.addEventListener('mouseenter', () => document.getElementById('cur').classList.add('x'));
+    el.addEventListener('mouseleave',  () => document.getElementById('cur').classList.remove('x'));
+    nodesLayer.appendChild(el);
+  });
+
+  // Boot with core selected
+  setTimeout(() => select('core'), 150);
 }
 
-function selectNode(id) {
-	if(activeNodeId === id) return; 
-	activeNodeId = id;
-	const nodeData = ecosystemData[id];
+function select(id) {
+  if(active === id) return;
+  active = id;
+  const m = MODS[id];
+  if(!m) return;
 
-	// 1. Reset Nodes
-	document.querySelectorAll('.node').forEach(el => {
-		el.classList.remove('active');
-		el.style.borderColor = 'var(--glass-border)';
-		el.style.background = 'var(--glass)';
-		if(el.classList.contains('center')) {
-			el.style.borderColor = 'var(--erp)';
-			el.style.background = 'rgba(255,255,255,0.95)';
-		}
-	});
-	
-	// Highlight Active
-	const activeEl = document.getElementById(`node-${id}`);
-	activeEl.classList.add('active');
-	activeEl.style.borderColor = `var(--${nodeData.colorToken})`;
-	activeEl.style.background = `#ffffff`;
+  // Reset all nodes
+  document.querySelectorAll('.node').forEach(n => {
+    n.classList.remove('active','dim');
+    n.style.borderColor = 'rgba(242,237,230,.12)';
+    n.style.background = 'rgba(22,20,18,0.95)';
+    n.style.boxShadow = '';
+  });
 
-	// 2. Reset Lines
-	document.querySelectorAll('.flow-line').forEach(line => {
-		line.classList.remove('active');
-		line.style.stroke = 'rgba(0,0,0,0.08)';
-		line.style.opacity = '1';
-	});
+  // Reset all lines
+  document.querySelectorAll('.flow-line').forEach(l => {
+    l.classList.remove('on','dim');
+    l.style.stroke = 'rgba(242,237,230,.07)';
+    l.style.strokeDasharray = '';
+  });
 
-	// Highlight active connections
-	nodeData.connections.forEach(targetId => {
-		let line = document.getElementById(`line-${id}-${targetId}`) || document.getElementById(`line-${targetId}-${id}`);
-		if(line) {
-			line.classList.add('active');
-			line.style.stroke = `var(--${nodeData.colorToken})`;
-		}
-	});
+  // Active node
+  const activeEl = document.getElementById('n-'+id);
+  activeEl.classList.add('active');
+  activeEl.style.borderColor = m.color;
+  activeEl.style.background = 'rgba(28,24,22,0.98)';
+  activeEl.style.boxShadow = `0 0 0 3px ${m.color}22, 0 12px 40px ${m.color}18`;
 
-	// 3. Update Detail Panel
-	const panel = document.getElementById('detail-panel');
-	panel.classList.remove('placeholder');
-	
-	// Build Boards HTML
-	let boardsHtml = nodeData.boards.map(b => `
-		<span class="board-chip">
-			<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--${nodeData.colorToken})" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-			${b}
-		</span>
-	`).join('');
+  // Connected nodes + lines
+  const connSet = new Set(m.connections);
+  document.querySelectorAll('.node').forEach(n => {
+    const nid = n.id.replace('n-','');
+    if(nid !== id && !connSet.has(nid)) n.classList.add('dim');
+  });
+  document.querySelectorAll('.flow-line').forEach(l => {
+    const a = l.dataset.a, b = l.dataset.b;
+    if((a===id&&connSet.has(b))||(b===id&&connSet.has(a))||(a===id||b===id)) {
+      l.classList.add('on');
+      l.style.stroke = m.color;
+    } else {
+      l.classList.add('dim');
+    }
+  });
 
-	let functionsHtml = nodeData.functions.map(f => `
-		<li>
-			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--${nodeData.colorToken})" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="background: var(--${nodeData.colorToken}-bg); border-radius:50%; padding:2px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-			<span>${f}</span>
-		</li>
-	`).join('');
-
-	let connectionsHtml = nodeData.connections.map(targetId => {
-		const tNode = ecosystemData[targetId];
-		return `<span class="sys-tag" onclick="selectNode('${tNode.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--${tNode.colorToken})" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>${tNode.title}</span>`;
-	}).join('');
-
-	panel.innerHTML = `
-		<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 24px;">
-			<div class="tag" style="background:var(--${nodeData.colorToken}-bg); color:var(--${nodeData.colorToken}); border-color:var(--${nodeData.colorToken}-border);">
-				User Role: ${nodeData.role}
-			</div>
-			<div style="color:var(--${nodeData.colorToken}); transform: scale(1.5); transform-origin: top right;">
-				${nodeData.icon}
-			</div>
-		</div>
-		
-		<div class="detail-title">${nodeData.title}</div>
-		<div class="detail-desc">${nodeData.desc}</div>
-		
-		<div class="detail-section-title" style="color:var(--${nodeData.colorToken}); border-bottom-color:var(--${nodeData.colorToken}-bg);">System Boards & Navigation</div>
-		<div class="boards-grid">
-			${boardsHtml}
-		</div>
-
-		<div class="detail-section-title" style="color:var(--${nodeData.colorToken}); border-bottom-color:var(--${nodeData.colorToken}-bg);">Life Cycle & Data Flow</div>
-		<div class="lifecycle-box">
-			${nodeData.lifecycle}
-			<div class="data-flow-row">
-				<span style="color:var(--text); font-weight:800;">DATA IN:</span> ${nodeData.in}
-			</div>
-			<div class="data-flow-row">
-				<span style="color:var(--text); font-weight:800;">DATA OUT:</span> ${nodeData.out}
-			</div>
-		</div>
-
-		<div class="detail-section-title">Core Functions</div>
-		<ul class="function-list">
-			${functionsHtml}
-		</ul>
-		
-		<div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.06);">
-			<div class="detail-section-title">Network Links (Click to jump)</div>
-			<div class="connection-tags">
-				${connectionsHtml}
-			</div>
-		</div>
-	`;
-	
-	// Smooth scroll for mobile
-	if(window.innerWidth <= 1200) {
-		panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-	}
+  // Render detail panel
+  renderDetail(m);
 }
 
-// Boot
-window.onload = initExplorer;
+function renderDetail(m) {
+  const panel = document.getElementById('detail');
+  panel.classList.remove('empty');
+
+  const boardsHtml = m.boards.map(b => `
+    <span class="board-chip">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="${m.color}" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+      ${b}
+    </span>`).join('');
+
+  const funcsHtml = m.functions.map(f => `
+    <li>
+      <span class="func-bullet" style="background:${m.color}"></span>
+      <span>${f}</span>
+    </li>`).join('');
+
+  const connHtml = m.connections.map(cid => {
+    const cm = MODS[cid]; if(!cm) return '';
+    return `<span class="conn-tag" onclick="select('${cid}')" style="color:${cm.color};border-color:${cm.color}33">
+      <span class="conn-tag-dot" style="background:${cm.color}"></span>
+      ${cm.title}
+    </span>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div class="d-header">
+      <span class="d-role" style="color:${m.color};border-color:${m.color};background:${m.color}11">${m.role}</span>
+      <div class="d-icon" style="color:${m.color}">${ICONS[m.id]||''}</div>
+    </div>
+
+    <div class="d-title" style="color:${m.color}">${m.title}</div>
+    <div class="d-desc">${m.desc}</div>
+
+    <div class="d-section" style="color:${m.color}; --nc:${m.color}">
+      <span style="display:block;width:14px;height:1px;background:${m.color}"></span>
+      Internal Boards
+    </div>
+    <div class="boards">${boardsHtml}</div>
+
+    <div class="d-section" style="color:${m.color}">
+      <span style="display:block;width:14px;height:1px;background:${m.color}"></span>
+      Data Lifecycle
+    </div>
+    <div class="lifecycle-box">
+      ${m.lifecycle}
+      <div class="data-row">
+        <span class="data-row-label">DATA IN:</span>
+        <span class="data-row-val">${m.dataIn}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-row-label">DATA OUT:</span>
+        <span class="data-row-val">${m.dataOut}</span>
+      </div>
+    </div>
+
+    <div class="d-section" style="color:${m.color}">
+      <span style="display:block;width:14px;height:1px;background:${m.color}"></span>
+      Core Functions
+    </div>
+    <ul class="func-list">${funcsHtml}</ul>
+
+    <div class="conn-tags">${connHtml}</div>
+  `;
+
+  // Scroll panel into view on mobile
+  if(window.innerWidth <= 1100) {
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Cursor
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX+'px';
+  cur.style.top  = e.clientY+'px';
+});
+document.querySelectorAll('a,button').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('x'));
+  el.addEventListener('mouseleave',  () => cur.classList.remove('x'));
+});
+
+window.onload = boot;
 </script>
-
 </body>
 </html>
